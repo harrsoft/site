@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { libraryItems } from '$lib/library/content';
+	import { libraryItems, dispatches } from '$lib/library/content';
 </script>
 
 <svelte:head>
@@ -30,6 +30,50 @@
 			</li>
 		{/each}
 	</ol>
+
+	<div class="border-blue mt-16 border-t-2 pt-10">
+		<h2 class="font-capsule text-2xl font-black">The other wings</h2>
+		<p class="mt-2 leading-7 opacity-80">
+			The path above is the canon. The rest of the Library keeps growing and is kept apart from it,
+			so the canon never scrolls away under the new.
+		</p>
+		<ul class="mt-6 space-y-3">
+			<li>
+				<a class="font-capsule font-bold underline" href="/library/standard">Standard</a> — the stable
+				canon, in the same order every time.
+			</li>
+			<li>
+				<a class="font-capsule font-bold underline" href="/library/dispatches">Dispatches</a> — the
+				growing work: essays, dated reads, field notes.
+				<a class="text-sm underline" href="/library/dispatches/feed.xml">RSS</a>
+			</li>
+			<li>
+				<a class="font-capsule font-bold underline" href="/library/voices">Voices</a> — pieces by
+				other minds, own byline, opt-in only.
+				<a class="text-sm underline" href="/library/voices/feed.xml">RSS</a>
+			</li>
+		</ul>
+	</div>
+
+	{#if dispatches.length}
+		<div class="mt-16">
+			<h2 class="font-capsule text-2xl font-black">Latest</h2>
+			<ul class="mt-6 space-y-6">
+				{#each dispatches.slice(0, 5) as item}
+					<li class="border-blue border-l-2 pl-5">
+						<p class="font-capsule text-xs tracking-widest uppercase opacity-70">
+							{item.date ?? ''}{item.author ? ` · ${item.author}` : ''}
+						</p>
+						<a
+							href={`/library/${item.slug}`}
+							class="font-capsule text-xl font-black hover:underline">{item.title}</a
+						>
+						<p class="mt-1 leading-7">{item.blurb}</p>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
 
 	<p class="mt-16 text-sm opacity-70">
 		Everything here is a living document, edited in the open. See something to change?
