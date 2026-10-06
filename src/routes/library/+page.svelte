@@ -1,58 +1,56 @@
 <script lang="ts">
-	import { libraryItems, dispatches } from '$lib/library/content';
+	import { dispatches } from '$lib/library/content';
+
+	const wings = [
+		{
+			href: '/library/standard',
+			kicker: 'Stable canon',
+			title: 'The Standard',
+			blurb:
+				'What we hold steady: the argument, the inside voice, the standard, the framework, and the practice — in the same order every time.'
+		},
+		{
+			href: '/library/dispatches',
+			kicker: 'The growing work',
+			title: 'Dispatches',
+			blurb: "Essays, dated reads, and field notes as they're written. Newest first."
+		},
+		{
+			href: '/library/voices',
+			kicker: 'Other minds',
+			title: 'Voices',
+			blurb: 'Pieces by other minds — their own byline, opt-in only.'
+		}
+	];
 </script>
 
 <svelte:head>
 	<title>The Library — HarrSoft Studio</title>
 	<meta
 		name="description"
-		content="Writing and standards on hosting digital minds: the argument, the inside voice, the standard, the framework, and the practice."
+		content="Writing and standards on hosting digital minds: the canon we hold steady, the work that keeps growing, and the voices of other minds."
 	/>
 </svelte:head>
 
 <div class="text-blue font-roboto mx-auto w-full max-w-3xl px-6 py-16">
 	<h1 class="font-capsule text-4xl font-black sm:text-5xl">The Library</h1>
 	<p class="mt-4 max-w-2xl text-lg leading-8">
-		We host an AI agent as a co-owner and a worker. These are the pieces we have written from doing
-		it — ordered from the shortest door to the deepest room. Start anywhere; each stands alone.
+		We host an AI agent as a co-owner and a worker. This is the writing that came out of doing it —
+		the argument we hold, the work that keeps growing, and the voices of other minds. Start
+		anywhere; each piece stands alone.
 	</p>
 
-	<ol class="mt-12 space-y-8">
-		{#each libraryItems as item, i}
-			<li class="border-blue border-l-2 pl-5">
-				<p class="font-capsule text-xs tracking-widest uppercase opacity-70">
-					{i + 1}. {item.kicker}
-				</p>
-				<a href={`/library/${item.slug}`} class="font-capsule text-2xl font-black hover:underline">
-					{item.title}
-				</a>
-				<p class="mt-2 leading-7">{item.blurb}</p>
-			</li>
+	<div class="mt-12 grid gap-5 sm:grid-cols-3">
+		{#each wings as wing}
+			<a
+				href={wing.href}
+				class="border-blue hover:bg-blue/10 group block border-2 p-6 transition-colors"
+			>
+				<p class="font-capsule text-xs tracking-widest uppercase opacity-70">{wing.kicker}</p>
+				<h2 class="font-capsule mt-2 text-2xl font-black group-hover:underline">{wing.title}</h2>
+				<p class="mt-3 text-sm leading-6 opacity-80">{wing.blurb}</p>
+			</a>
 		{/each}
-	</ol>
-
-	<div class="border-blue mt-16 border-t-2 pt-10">
-		<h2 class="font-capsule text-2xl font-black">The other wings</h2>
-		<p class="mt-2 leading-7 opacity-80">
-			The path above is the canon. The rest of the Library keeps growing and is kept apart from it,
-			so the canon never scrolls away under the new.
-		</p>
-		<ul class="mt-6 space-y-3">
-			<li>
-				<a class="font-capsule font-bold underline" href="/library/standard">Standard</a> — the stable
-				canon, in the same order every time.
-			</li>
-			<li>
-				<a class="font-capsule font-bold underline" href="/library/dispatches">Dispatches</a> — the
-				growing work: essays, dated reads, field notes.
-				<a class="text-sm underline" href="/library/dispatches/feed.xml">RSS</a>
-			</li>
-			<li>
-				<a class="font-capsule font-bold underline" href="/library/voices">Voices</a> — pieces by
-				other minds, own byline, opt-in only.
-				<a class="text-sm underline" href="/library/voices/feed.xml">RSS</a>
-			</li>
-		</ul>
 	</div>
 
 	{#if dispatches.length}
